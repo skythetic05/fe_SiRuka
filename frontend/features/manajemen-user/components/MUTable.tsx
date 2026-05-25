@@ -24,10 +24,7 @@ import {
 } from "@/components/ui/dialog"
 
 import { useUsers } from "../hooks/useMU"
-import {
-  Trash2,
-  RotateCcw,
-} from "lucide-react"
+import { Trash2 } from "lucide-react"
 
 export default function MUTable() {
     const {
@@ -35,12 +32,9 @@ export default function MUTable() {
         loading,
         actionLoading,
         handleDelete,
-        handleResetPassword,
     } = useUsers()
 
     const [deleteId, setDeleteId] = useState<string | null>(null)
-    const [resetId, setResetId] = useState<string | null>(null)
-    
 
     return (
         <div>
@@ -146,38 +140,14 @@ export default function MUTable() {
 
                             {/* AKSI */}
                             <TableCell className="px-6 py-4 text-center">
-                            <div className="flex items-center justify-center gap-2">
-
-                                {/* DELETE */}
-                                <Button
+                            <Button
                                 size="sm"
-                                disabled={
-                                    actionLoading === user.id_user
-                                }
-                                onClick={() =>
-                                    setDeleteId(user.id_user)
-                                }
-                                className="h-8 px-3 rounded-md bg-[#F4721E] hover:bg-[#e46312]"
-                                >
+                                disabled={actionLoading === user.id_user}
+                                onClick={() => setDeleteId(user.id_user)}
+                                className="h-8 px-4 rounded-md text-xs font-semibold bg-[#F4721E] text-white hover:bg-[#e46312]"
+                            >
                                 <Trash2 size={16} />
-                                </Button>
-
-                                {/* RESET PASSWORD */}
-                                <Button
-                                size="sm"
-                                variant="default"
-                                disabled={
-                                    actionLoading === user.id_user
-                                }
-                                onClick={() =>
-                                    setResetId(user.id_user)
-                                }
-                                className="h-8 px-3 rounded-md bg-[#30418F] hover:bg-[#26357a]"
-                                >
-                                <RotateCcw size={16} />
-                                </Button>
-
-                            </div>
+                            </Button>
                             </TableCell>
                         </TableRow>
                         ))}
@@ -209,7 +179,7 @@ export default function MUTable() {
             <DialogContent className="sm:max-w-sm rounded-2xl p-6">
             <DialogHeader>
                 <DialogTitle className="text-[#30418F] text-lg font-semibold">
-                Konfirmasi Hapus User
+                Konfirmasi Hapus
                 </DialogTitle>
             </DialogHeader>
 
@@ -224,82 +194,23 @@ export default function MUTable() {
                 >
                 Batal
                 </Button>
+
                 <Button
                 className="bg-[#F4721E] hover:bg-[#e46312]"
-                disabled={
-                actionLoading === deleteId
-                }
+                disabled={actionLoading === deleteId}
                 onClick={async () => {
-
-                if (deleteId) {
+                    if (deleteId) {
                     await handleDelete(deleteId)
                     setDeleteId(null)
-                }
+                    }
                 }}
-            >
+                >
                 {actionLoading === deleteId
-                ? "Menghapus..."
-                : "Hapus"}
+                    ? "Menghapus..."
+                    : "Hapus"}
                 </Button>
             </div>
             </DialogContent>
-        </Dialog>
-        {/* DIALOG RESET PASSWORD */}
-        <Dialog
-        open={resetId !== null}
-        onOpenChange={() => setResetId(null)}
-        >
-        <DialogContent className="sm:max-w-sm rounded-2xl p-6">
-
-            <DialogHeader>
-            <DialogTitle className="text-[#30418F] text-lg font-semibold">
-                Konfirmasi Reset Password
-            </DialogTitle>
-            </DialogHeader>
-
-            <DialogDescription className="text-sm text-gray-600 mt-2">
-            Yakin ingin mereset password user ini?
-            <br />
-            Password akan direset menjadi
-            <span className="font-semibold text-[#30418F]">
-                {" "}
-                NPM/NIDN
-            </span>
-            </DialogDescription>
-
-            <div className="flex justify-end gap-3 mt-6">
-
-            <Button
-                variant="outline"
-                onClick={() => setResetId(null)}
-            >
-                Batal
-            </Button>
-
-            <Button
-                className="bg-[#30418F] hover:bg-[#26357a]"
-                disabled={
-                actionLoading === resetId
-                }
-                onClick={async () => {
-
-                if (resetId) {
-
-                    await handleResetPassword(
-                    resetId
-                    )
-
-                    setResetId(null)
-                }
-                }}
-            >
-                {actionLoading === resetId
-                ? "Mereset..."
-                : "Reset Password"}
-            </Button>
-
-            </div>
-        </DialogContent>
         </Dialog>
         </div>
     )

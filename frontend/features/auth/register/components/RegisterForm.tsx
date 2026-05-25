@@ -60,7 +60,7 @@ export default function SignUpPage() {
                             {/* nama */}
                             <div className="space-y-2 md:col-span-2">
                                 <Label className="text-sm sm:text-base font-medium ml-1 text-[#30418F]">
-                                    Nama
+                                    nama
                                 </Label>
                                 <Input
                                     value={form.nama}
@@ -136,8 +136,8 @@ export default function SignUpPage() {
                                         <SelectValue placeholder="Pilih Role" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="Mahasiswa">Mahasiswa</SelectItem>
-                                        <SelectItem value="Dosen">Dosen</SelectItem>
+                                        <SelectItem value="mahasiswa">Mahasiswa</SelectItem>
+                                        <SelectItem value="dosen">Dosen</SelectItem>
                                     </SelectContent>
                                 </Select>
                                 {errors.role && (

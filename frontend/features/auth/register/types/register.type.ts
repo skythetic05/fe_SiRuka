@@ -3,7 +3,7 @@ export type RegisterDto = {
   npm_nidn: string;
   email: string;
   password: string;
-  role: "Mahasiswa" | "Dosen";
+  role: "mahasiswa" | "dosen";
 };
 
 export type RegisterResponse = {

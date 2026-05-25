@@ -232,7 +232,7 @@ export default function RuanganTable() {
                 </DialogHeader>
 
                 <DialogDescription className="text-sm text-gray-600 mt-2">
-                    Yakin ingin menghapus data ruangan ini?
+                    Yakin ingin menghapus data user ini?
                 </DialogDescription>
 
                 <div className="flex justify-end gap-3 mt-6">
