@@ -11,7 +11,7 @@ const schema = z.object({
     email: z.string().email("Email tidak valid"),
     npm_nidn: z.string().min(1, "NPM/NIDN wajib diisi"),
     password: z.string().min(6, "Minimal 6 karakter"),
-    role: z.enum(["mahasiswa", "dosen"], {
+    role: z.enum(["Mahasiswa", "Dosen"], {
         message: "Role tidak valid",
     }),
     });

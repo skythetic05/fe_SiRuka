@@ -136,8 +136,8 @@ export default function SignUpPage() {
                                         <SelectValue placeholder="Pilih Role" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="mahasiswa">Mahasiswa</SelectItem>
-                                        <SelectItem value="dosen">Dosen</SelectItem>
+                                        <SelectItem value="Mahasiswa">Mahasiswa</SelectItem>
+                                        <SelectItem value="Dosen">Dosen</SelectItem>
                                     </SelectContent>
                                 </Select>
                                 {errors.role && (
