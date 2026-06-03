@@ -46,9 +46,10 @@ export const useLogin = () => {
 
             const token = res?.token;
             const user = res?.user;
-
+            
             // Validasi
             if (!token || !user) {
+                console.log("FULL RESPONSE DEBUG:", res);
                 toast.error("Token / user tidak ditemukan");
                 return;
             }

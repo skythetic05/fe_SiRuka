@@ -11,6 +11,7 @@ const schema = z.object({
     waktu_mulai: z.string().min(1, "Waktu mulai wajib diisi"),
     waktu_berakhir: z.string().min(1, "Waktu berakhir wajib diisi"),
     ruangan: z.string().min(1, "Ruangan wajib diisi"),
+    jenis: z.string().min(1, "Jenis jadwal wajib dipilih"),
 });
 
 type JadwalDto = z.infer<typeof schema>;
@@ -28,16 +29,20 @@ export const useJadwal = () => {
         const result = schema.safeParse(data);
 
         if (!result.success) {
-        const fieldErrors: Partial<Record<keyof JadwalDto, string>> = {};
+        const fieldErrors: Partial<
+            Record<keyof JadwalDto, string>
+        > = {};
 
         result.error.issues.forEach((err) => {
             const field = err.path[0] as keyof JadwalDto;
+
             if (!fieldErrors[field]) {
             fieldErrors[field] = err.message;
             }
         });
 
         setErrors(fieldErrors);
+
         toast.error("Periksa kembali form");
         return;
         }
@@ -49,7 +54,10 @@ export const useJadwal = () => {
 
         toast.success("Jadwal berhasil dibuat");
         } catch (err: any) {
-        toast.error(err?.response?.data?.error || "Gagal membuat jadwal");
+        toast.error(
+            err?.response?.data?.message ||
+            "Gagal membuat jadwal"
+        );
         } finally {
         setLoading(false);
         }

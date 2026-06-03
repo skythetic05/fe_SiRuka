@@ -13,8 +13,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         {children}
-        <Toaster richColors position="top-right" />
-        </body>
+        <Toaster
+          richColors
+          position="top-right"
+          duration={1000}
+        />
+      </body>
     </html>
   )
 }

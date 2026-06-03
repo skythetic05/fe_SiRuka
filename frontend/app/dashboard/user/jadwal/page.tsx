@@ -1,10 +1,10 @@
 "use client";
 import { useAuth } from "@/features/auth/login/hooks/use-auth";
-import UserRuangan from "@/features/user-ruangan/components/UserRuangan";
+import UserJadwal from "@/features/user-jadwal/components/UserJadwal"
 
-
-export default function UserRuanganPage() {
+export default function Page() {
   const { isChecking } = useAuth();
   if (isChecking) return null; 
-  return <UserRuangan/> 
+  return <UserJadwal />
+  
 }

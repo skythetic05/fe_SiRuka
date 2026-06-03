@@ -4,5 +4,5 @@ export type JadwalDto = {
     waktu_mulai: string;
     waktu_berakhir: string;
     ruangan: string;
+    jenis: string;
 };
-

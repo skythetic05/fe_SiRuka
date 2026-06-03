@@ -13,9 +13,11 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import Link from "next/link";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function SignUpPage() {
     const { register, loading, errors } = useRegister();
+    const [showPassword, setShowPassword] = useState(false);
 
     const [form, setForm] = useState({
         nama: "",
@@ -108,18 +110,34 @@ export default function SignUpPage() {
 
                             {/* Password */}
                             <div className="space-y-2">
-                                <Label className="text-sm sm:text-base font-medium ml-1 text-[#30418F]">
+                                <Label className="text-sm sm:text-base font-medium ml-1">
                                     Password
                                 </Label>
-                                <Input
-                                    type="password"
-                                    value={form.password}
-                                    onChange={(e) => setForm({ ...form, password: e.target.value })}
-                                    className="h-12 sm:h-14 bg-white text-black text-sm sm:text-base border-[3px] rounded-xl sm:rounded-2xl focus-visible:ring-0"
-                                    style={{ borderColor: "#F4B539" }}
-                                />
+
+                                <div className="relative">
+                                    <Input
+                                        type={showPassword ? "text" : "password"}
+                                        value={form.password}
+                                        onChange={(e) =>
+                                            setForm({ ...form, password: e.target.value })
+                                        }
+                                        className="h-12 sm:h-14 w-full pr-12 bg-white text-black text-sm sm:text-base border-[3px] rounded-xl sm:rounded-2xl focus-visible:ring-0"
+                                        style={{ borderColor: "#F4B539" }}
+                                    />
+
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                                    >
+                                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                    </button>
+                                </div>
+
                                 {errors.password && (
-                                    <p className="text-xs text-red-500 ml-1">{errors.password}</p>
+                                    <p className="text-xs text-red-500 ml-1">
+                                        {errors.password}
+                                    </p>
                                 )}
                             </div>
 
@@ -136,8 +154,8 @@ export default function SignUpPage() {
                                         <SelectValue placeholder="Pilih Role" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="Mahasiswa">Mahasiswa</SelectItem>
-                                        <SelectItem value="Dosen">Dosen</SelectItem>
+                                        <SelectItem value="mahasiswa">Mahasiswa</SelectItem>
+                                        <SelectItem value="dosen">Dosen</SelectItem>
                                     </SelectContent>
                                 </Select>
                                 {errors.role && (
