@@ -128,3 +128,8 @@
     @apply font-sans;
   }
 }
+/* Hilangkan tombol show password bawaan Edge */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}

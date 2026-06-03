@@ -112,8 +112,6 @@ function getTanggalDariHari(
 
 export function useJadwalUser() {
     // tab hari 
-    // TAB HARI
-    // ==========================================================
     const hariSekarang = HARI_INDONESIA[new Date().getDay()];
 
     const defaultHari = TABS_HARI.includes(hariSekarang)
@@ -192,9 +190,13 @@ export function useJadwalUser() {
         try {
         const res =
             await jadwalUserService.getTidakTerjadwal();
+        console.log("RES:", res);
+        console.log("DATA:", res.tidak_terjadwal);
 
         setJadwalTidakTerjadwal(
-            res.tidak_terjadwal
+        Array.isArray(res?.tidak_terjadwal)
+            ? res.tidak_terjadwal
+            : []
         );
         } catch (err: any) {
         toast.error(
@@ -226,33 +228,64 @@ export function useJadwalUser() {
 
     const jadwalTidakTerjadwalAktif = useMemo(() => {
         const sekarang = new Date();
-        
+
         const jamSekarangMenit =
-        sekarang.getHours() * 60 +
-        sekarang.getMinutes();
+            sekarang.getHours() * 60 +
+            sekarang.getMinutes();
 
         const tanggalHariIni =
-        sekarang.toISOString().split("T")[0];
+            sekarang.toISOString().split("T")[0];
 
-        return jadwalTidakTerjadwal.filter((j) => {
-        const namaHariJadwal =
-            getNamaHariDariTanggal(j.tanggal);
+        return (jadwalTidakTerjadwal || []).filter((j) =>  {
+            const namaHariJadwal =
+                getNamaHariDariTanggal(j.tanggal);
 
-        if (namaHariJadwal !== selectedHari) {
-            return false;
-        }
+            if (namaHariJadwal !== selectedHari) {
+                return false;
+            }
 
-        if (j.tanggal > tanggalHariIni)
-            return true;
+            const tanggalPinjam = new Date(j.tanggal + "T00:00:00");
 
-        if (j.tanggal === tanggalHariIni) {
-            return (
-            toMenit(j.waktu_berakhir) >
-            jamSekarangMenit
+            const hariIni = new Date(tanggalHariIni + "T00:00:00");
+
+            const selisihHari = Math.ceil(
+                (tanggalPinjam.getTime() - hariIni.getTime()) /
+                (1000 * 60 * 60 * 24)
             );
-        }
 
-        return false;
+            let tanggalMuncul = new Date(tanggalPinjam);
+
+            // Jika H-1 atau kurang => langsung tampil
+            if (selisihHari <= 1) {
+                tanggalMuncul = hariIni;
+            } else {
+                // Cari hari Minggu sebelum tanggal peminjaman
+                while (tanggalMuncul.getDay() !== 0) {
+                    tanggalMuncul.setDate(
+                        tanggalMuncul.getDate() - 1
+                    );
+                }
+            }
+
+            const tanggalMunculStr =
+                tanggalMuncul.toISOString().split("T")[0];
+
+            if (tanggalHariIni < tanggalMunculStr) {
+                return false;
+            }
+
+            if (j.tanggal > tanggalHariIni) {
+                return true;
+            }
+
+            if (j.tanggal === tanggalHariIni) {
+                return (
+                    toMenit(j.waktu_berakhir) >
+                    jamSekarangMenit
+                );
+            }
+
+            return false;
         });
     }, [jadwalTidakTerjadwal, selectedHari]);
 
@@ -347,7 +380,7 @@ export function useJadwalUser() {
 
             setForm({
             nama: "",
-            kelas: "",
+            kelas: cell.jadwal.kelas,
             tanggal: tanggalDipilih,
             ruangan: cell.jadwal.ruangan,
             waktu_mulai:

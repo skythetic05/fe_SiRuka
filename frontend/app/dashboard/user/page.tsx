@@ -5,7 +5,6 @@ import Image from "next/image"
 
 export default function HomePage() {
     const { isChecking } = useAuth()
-
     if (isChecking) return null
 
     return (

@@ -10,7 +10,7 @@ export default function HomePage() {
         <div className="h-[calc(100vh-64px)] relative overflow-hidden">
 
         {/* IMAGE*/}
-        <div className="relative inset-0 w-full h-full md:w-[65%]">
+        <div className="absolute inset-0 md:static md:w-[65%] md:h-full">
             <Image
             src="/kampus3.png"
             alt="Kampus"

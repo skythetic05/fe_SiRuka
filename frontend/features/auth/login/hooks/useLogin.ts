@@ -46,9 +46,10 @@ export const useLogin = () => {
 
             const token = res?.token;
             const user = res?.user;
-
+            
             // Validasi
             if (!token || !user) {
+                console.log("FULL RESPONSE DEBUG:", res);
                 toast.error("Token / user tidak ditemukan");
                 return;
             }
@@ -59,11 +60,9 @@ export const useLogin = () => {
             toast.success("Login berhasil");
 
             // Redirect ke dashbard seuai role
-            const role = user.role.toLowerCase();
-
-            if (role === "admin") {
+            if (user.role === "admin") {
                 router.push("/dashboard/admin");
-            } else if (role === "dosen" || role === "mahasiswa") {
+            } else if (user.role === "dosen" || user.role === "mahasiswa") {
                 router.push("/dashboard/user");
             } else {
                 router.push("/");

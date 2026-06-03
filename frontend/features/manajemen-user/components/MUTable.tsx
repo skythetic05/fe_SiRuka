@@ -25,8 +25,8 @@ import {
 
 import { useUsers } from "../hooks/useMU"
 import {
-  Trash2,
-  RotateCcw,
+    Trash2,
+    RotateCcw,
 } from "lucide-react"
 
 export default function MUTable() {

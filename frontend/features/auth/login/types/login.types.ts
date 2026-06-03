@@ -4,7 +4,7 @@ export type LoginDto = {
 };
 
 export type User = {
-    // id: number;
+    id: number;
     name: string;
     role: "admin" | "dosen" | "mahasiswa";
 };

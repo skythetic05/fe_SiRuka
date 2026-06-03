@@ -15,6 +15,5 @@ export const useAuth = () => {
         setIsChecking(false);
         }
     }, [router]);
-
     return { isChecking };
 };

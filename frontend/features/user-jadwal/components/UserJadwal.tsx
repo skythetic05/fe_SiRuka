@@ -207,12 +207,12 @@ export default function UserJadwal() {
       </div>
 
       {/* CARD TABLE */}
-      <Card className="rounded-[28px] border border-[#EAECF0] bg-white shadow-sm overflow-hidden">
-
-        {/* TOP HEADER */}
-        <div className="px-6 py-5 border-b bg-gradient-to-r from-[#30418F] to-[#4458B8]">
-          <div className="flex items-center gap-3 text-white">
-            <div className="w-11 h-11 rounded-2xl bg-white/15 flex items-center justify-center">
+      <Card
+      className="rounded-[36px] border border-[#DCDCDC] bg-white shadow-sm overflow-hidden p-0">
+      {/* TOP HEADER */}
+      <div className="bg-gradient-to-r from-[#30418F] to-[#4458B8] px-8 py-7">
+        <div className="flex items-center gap-4 text-white">
+          <div className="w-14 h-14 rounded-2xl bg-white/15 flex items-center justify-center">
               <CalendarDays size={22} />
             </div>
 
@@ -355,7 +355,7 @@ export default function UserJadwal() {
         open={modalOpen}
         onOpenChange={(open) => !open && handleCloseModal()}
       >
-        <DialogContent className="sm:max-w-[760px] rounded-[30px] border-none p-0 overflow-hidden">
+        <DialogContent className="sm:max-w-[760px] rounded-[30px] border-none p-0 overflow-hidden" aria-describedby={undefined}>
 
           {/* HEADER */}
           <div className="bg-gradient-to-r from-[#30418F] to-[#4458B8] px-8 py-7 text-white">
@@ -422,7 +422,7 @@ export default function UserJadwal() {
                 value={form.kelas}
                 onChange={(val) => handleFormChange("kelas", val)}
                 error={formErrors.kelas}
-                placeholder="Contoh: TI-2A"
+                readOnly={form.jenis_peminjaman === "TERJADWAL"}
               />
 
               <InputField
